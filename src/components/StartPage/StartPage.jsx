@@ -1,56 +1,77 @@
-// import React from 'react';
-// import React, { Component } from 'react';
 import { useState, useEffect } from 'react';
+// import ReactDOM from 'react-dom';
 import fetchBeers from '../APIservice';
+import ReactPaginate from 'react-paginate';
+import s from './StartPage.module.css';
+// import BeerList from '../BeerList';
 
-// import axios from 'axios';
+const Pagination = () => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const [beers, setBeers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isToggle, setToggle] = useState(true);
 
-import BeerList from '../BeerList';
-import Loader from '../Loader';
-import Pagination from '../Pagination';
+  const handleClick = e => {
+    setToggle(!isToggle);
 
-export default function StartPage() {
-  // const [beers, setBeers] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState(null);
+    e.preventDefault();
+  };
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   fetchBeers()
-  //     .then(beers => setBeers(beers))
-  //     .catch(error => console.log(error))
-  //     .finally(setIsLoading(false));
-  // }, [isLoading, beers]);
+  useEffect(() => {
+    setIsLoading(true);
+    fetchBeers()
+      .then(beers => setBeers(beers))
+      .catch(error => console.log(error))
+      .finally(setIsLoading(false));
+  }, [isLoading, beers]);
+
+  const PER_PAGE = 10;
+  const offset = currentPage * PER_PAGE;
+  const currentPageData = beers
+    .slice(offset, offset + PER_PAGE)
+    .map(({ id, image_url, name, first_brewed, food_pairing }) => (
+      <li key={id} className={s.card} onClick={handleClick}>
+        {isToggle ? (
+          <div>
+            <img className={s.image} src={image_url} alt={name}></img>
+            <span className={s.name}>{name}</span>
+          </div>
+        ) : (
+          <div className={s.info}>
+            <p>Name: {name}</p>
+            <p>First brewed: {first_brewed}</p>
+            <p>Best taste with: {food_pairing}</p>
+          </div>
+        )}
+      </li>
+    ));
+  const pageCount = Math.ceil(beers.length / PER_PAGE);
+
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage);
+  }
+
   return (
-    <div>
-      {/* {isLoading & <Loader />} */}
-      {/* <BeerList beers={beers} /> */}
-      <Pagination />
-    </div>
+    <>
+      <div className={s.two}>
+        <h1>List of Beers from all over the world</h1>
+      </div>
+      <div className={s.cardList}>{currentPageData}</div>
+      <div className={s.paginationW}>
+        <ReactPaginate
+          previousLabel={'← Previous'}
+          nextLabel={'Next →'}
+          pageCount={pageCount}
+          onPageChange={handlePageClick}
+          containerClassName={s.pagination}
+          previousLinkClassName={s.paginationLink}
+          nextLinkClassName={s.paginationLink}
+          disabledClassName={s.paginationLinkDisabled}
+          activeClassName={s.paginationLinkActive}
+        />
+      </div>
+    </>
   );
-}
-// export default class StartPage extends Component {
-//   state = {
-//     beers: [],
-//     isLoading: false,
-//     error: null,
-//   };
-//   componentDidMount() {
-//     this.setState({ isLoading: true });
-//     axios
-//       .get('https://api.punkapi.com/v2/beers?page=2&per_page=80')
-//       .then(response => this.setState({ beers: response.data }))
-//       .catch(error => this.setState({ error }))
-//       .finally(() => this.setState({ isLoading: false }));
-//   }
-//   render() {
-//     const { beers, isLoading, error } = this.state;
-//     return (
-//       <>
-//         {error && <p>Whoops, something went wrong: {error.message}</p>}
-//         {isLoading && <p>Loading...</p>}
-//         {beers.length > 0 && <BeerList beers={beers} />}
-//       </>
-//     );
-//   }
-// }
+};
+
+export default Pagination;
