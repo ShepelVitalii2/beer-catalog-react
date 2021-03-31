@@ -12,6 +12,7 @@
     "modern-normalize": "^1.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
+    "react-datepicker": "^3.6.0",
     "react-dom": "^17.0.1",
     "react-hook-form": "^6.15.5",
     "react-js-pagination": "^3.0.3",

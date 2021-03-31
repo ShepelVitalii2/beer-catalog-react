@@ -1,11 +1,11 @@
 import React from 'react';
 import Modal from 'react-modal';
-import Form from '../Form';
+import CustomForm from '../CustomForm';
 import s from './CustomSearch.module.css';
 
 const customStyles = {
   content: {
-    background: '#d4d4d0',
+    background: 'rgb(174, 180, 182)',
     width: '600px',
     top: '50%',
     left: '50%',
@@ -41,7 +41,7 @@ export default function CustomSearch() {
         onRequestClose={closeModal}
         style={customStyles}
       >
-        {<Form />}
+        {<CustomForm />}
       </Modal>
     </div>
   );

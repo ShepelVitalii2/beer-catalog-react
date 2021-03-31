@@ -6,10 +6,6 @@
   text-decoration: none;
 }
 
-/* body {
-  background-color: #d4d4d0;
-} */
-
 .image {
   justify-content: center;
 
@@ -47,13 +43,8 @@
   position: relative;
   border-radius: 10px;
   overflow: hidden;
-
   padding: 8px 14px;
-  background-color: #ba5cda;
-  /* opacity: 0.3; */
-
-  box-shadow: 0 5px 15px 0 #adadae;
-
+  background: linear-gradient(3deg, #e6d16c, #16014c);
   transition: transform 1s;
   transform-style: preserve-3d;
   cursor: pointer;
@@ -64,7 +55,7 @@
 .card:hover {
   background-color: #fff;
   transition: 0.5s;
-  transform: scale(1.001);
+  transform: scale(1.01);
 
   box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.16), 0px 4px 4px rgba(0, 0, 0, 0.06),
     0px 1px 1px rgba(0, 0, 0, 0.12);
@@ -88,9 +79,8 @@
   text-align: center;
 }
 .two h1 {
-  font-family: 'Open Sans', sans-serif;
   position: relative;
-  color: #ba5cda;
+  color: #4e4d3a;
   font-size: 3em;
   font-weight: bold;
   line-height: 1;
@@ -107,21 +97,14 @@
   width: 80%;
   height: 200%;
   border-radius: 50%/30%;
-  border: 6px solid #77a9bd;
+  border: 6px solid #858475;
   border-left-color: transparent;
   border-right-color: transparent;
 }
 
 /* pagination */
 
-h1 {
-  color: #6c7ac9;
-}
-
 .paginationW {
-  /* display: block; */
-  /* width: 720px; */
-
   padding-bottom: 40px;
   padding-top: 40px;
   margin-left: auto;

@@ -2,13 +2,34 @@ import { useState } from 'react';
 import s from './SearchBar.module.css';
 import Modal from '../Modal';
 import CustomSearch from '../CustomSearch';
+// import fetchBeers from '../APIservice';
 
 export default function SearchBar({ onSubmit }) {
-  const [query, setQuery] = useState('');
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [input, setInput] = useState('');
+
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [isBeers, setIsBeers] = useState([]);
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   fetchBeers()
+  //     .then(isBeers => setIsBeers(isBeers))
+  //     .catch(error => console.log(error))
+  //     .finally(setIsLoading(false));
+  // }, [isLoading, isBeers]);
 
   const queryNameChange = e => {
-    setQuery(e.currentTarget.value.toLowerCase());
+    setInput(e.currentTarget.value.toLowerCase());
+    console.log(input);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (input.trim() === '') {
+      return alert('Введите название картинки');
+    }
+    onSubmit(input);
+    setInput('');
   };
 
   // const onRegistratinClick = e => {
@@ -22,17 +43,19 @@ export default function SearchBar({ onSubmit }) {
   //   console.log(isModalOpen);
   // };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (query.trim() === '') {
-      console.log('Заполните поле');
-    }
-    onSubmit(query);
-    setQuery('');
-  };
+  // const handleSubmit = e => {
+  //   e.preventDefault();
+  //   if (input.trim() === '') {
+  //     alert('Dude, type something');
+  //   }
+
+  //   // onSubmit(query);
+  //   // setQuery('');
+  //   console.log(input);
+  // };
 
   return (
-    <header onSubmit={handleSubmit} className={s.wrap}>
+    <header className={s.wrap} onSubmit={handleSubmit}>
       <form className={s.searchForm}>
         <button type="submit" className={s.button}>
           <span className={s.label}>Search</span>
@@ -42,8 +65,8 @@ export default function SearchBar({ onSubmit }) {
           className={s.input}
           type="text"
           autoComplete="off"
+          value={input}
           autoFocus
-          value={query}
           onChange={queryNameChange}
           placeholder="TEST"
         />

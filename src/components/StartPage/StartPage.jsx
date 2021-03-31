@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 // import ReactDOM from 'react-dom';
-import fetchBeers from '../APIservice';
+import { apiService } from '../APIservice';
 import ReactPaginate from 'react-paginate';
 import s from './StartPage.module.css';
 // import BeerList from '../BeerList';
+// import CustomBeerList from '../CustomBeerList';
 
 const Pagination = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -19,7 +20,7 @@ const Pagination = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchBeers()
+    apiService()
       .then(beers => setBeers(beers))
       .catch(error => console.log(error))
       .finally(setIsLoading(false));
@@ -57,6 +58,7 @@ const Pagination = () => {
         <h1>List of Beers from all over the world</h1>
       </div>
       <div className={s.cardList}>{currentPageData}</div>
+
       <div className={s.paginationW}>
         <ReactPaginate
           previousLabel={'← Previous'}

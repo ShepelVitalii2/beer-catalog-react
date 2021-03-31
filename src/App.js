@@ -5,57 +5,77 @@ import fetchBeers from './components/APIservice';
 import LoaderSpinner from './components/Loader';
 import StartPage from './components/StartPage';
 // import Modal from './components/Modal';
-import Navbar from './components/Navbar';
+// import Navbar from './components/Navbar';
 // import BeerList from './components/BeerList';
-// import SearchBar from './components/SearchBar';
+import SearchBar from './components/SearchBar';
 
 export default function App() {
-  const [query, setQuery] = useState('');
+  const [beers, setBeers] = useState('');
   const [gallery, setGallery] = useState([]);
-  // const [page, setPage] = useState(1);
+
   const [isLoading, setIsLoading] = useState(false);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (!query) {
+    if (!beers) {
       return;
     }
     setIsLoading('true');
-    fetchBeers(query)
+    fetchBeers(beers)
       .then(beers => {
-        setGallery(gallery => [...gallery, ...beers]);
+        setGallery([beers]);
       })
       .catch(error => console.log(error))
       .finally(() => setIsLoading(false));
-  }, [query]);
+  }, [beers]);
 
-  // const handleFormSubmit = submitQuery => {
-  //   if (submitQuery !== query) {
-  //     setQuery('');
-  //     setGallery([]);
-  //     setPage(1);
-  //   }
+  // const fetchData = async () => {
+  //   return await fetch(`https://api.punkapi.com/v2/beers/beer_name=${beers}`)
+  //     .then(response => response.json())
+  //     .then(beers => {
+  //       setBeers(beers);
+  //       console.log(beers);
+  //       // setCountryListDefault(data);
+  //     });
+  // }
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     return await fetch(`https://api.punkapi.com/v2/beers?page=1&per_page=80`)
+  //       .then(response => response.json())
+  //       .then(beers => {
+  //         setBeers(beers);
+  //         setGallery(beers);
+  //       });
+  //   };
+
+  //   return fetchData;
+  // }, [beers]);
+
+  // const handleFormSubmit = async (e, beers) => {
+  //   console.log(e);
+  //   const filtered = gallery.filter(beers => {
+  //     return beers.name.toLowerCase().includes(beers.toLowerCase());
+  //   });
+  //   setBeers(beers);
+  //   setGallery(filtered);
+  //   console.log(filtered);
   // };
 
-  // const onRegistratinClick = e => {
-  //   e.preventDefault();
-
-  //   setIsModalOpen(true);
-  // };
-
-  // const toggleModal = () => {
-  //   setIsModalOpen(!isModalOpen);
-  //   console.log(isModalOpen);
-  // };
+  const handleFormSubmit = query => {
+    if (query !== beers) {
+      setGallery([]);
+      setBeers(query);
+    }
+  };
 
   return (
     <div>
-      {<Navbar />}
+      {/* {<Navbar />} */}
 
-      {/* <SearchBar onSubmit={handleFormSubmit} /> */}
-      {gallery.length === 0 && <StartPage />}
+      <SearchBar onSubmit={handleFormSubmit} />
+      {<StartPage />}
       <div>{isLoading && <LoaderSpinner />}</div>
-      {/* {query && <BeerList gallery={gallery} />} */}
+      {beers && <StartPage gallery={gallery} />}
       {/* {isModalOpen && <Modal onClose={toggleModal}></Modal>} */}
     </div>
   );

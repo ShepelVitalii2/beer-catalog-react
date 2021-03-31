@@ -5,7 +5,8 @@ import s from './Modal.module.css';
 
 const customStyles = {
   content: {
-    background: '#d4d4d0',
+    background: 'rgb(174, 180, 182)',
+    padding: '29px',
     width: '600px',
     top: '50%',
     left: '50%',

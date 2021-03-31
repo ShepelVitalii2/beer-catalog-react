@@ -10,9 +10,16 @@ const apiService = () => {
     .then(response => response.data);
 };
 
+const apiServiceByName = query => {
+  return axios
+    .get(`${BASE_URL}beers?beer_name=${query}`)
+
+    .then(response => response.data);
+};
+
 apiService.propTypes = {
   query: PropTypes.string.isRequired,
   currentPage: PropTypes.number.isRequired,
 };
 
-export default apiService;
+export { apiService, apiServiceByName };

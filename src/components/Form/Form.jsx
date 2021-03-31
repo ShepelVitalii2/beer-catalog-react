@@ -1,11 +1,15 @@
 import React from 'react';
 
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import DatePicker from 'react-datepicker';
 
 import s from './Form.module.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function Form() {
   const { register, handleSubmit, watch, errors } = useForm();
+  const [startDate, setStartDate] = useState(new Date());
   const onSubmit = data => {
     console.log(data);
   }; // your form submit function which will invoke after successful validation
@@ -41,6 +45,17 @@ export default function Form() {
           className={s.input}
         />
       </div>
+      <div>
+        <label htmlFor="email" className={s.label}>
+          Birthday
+        </label>
+        <DatePicker
+          className={s.input}
+          selected={startDate}
+          onChange={date => setStartDate(date)}
+        />
+      </div>
+
       <div>
         <label htmlFor="email" className={s.label}>
           Email
