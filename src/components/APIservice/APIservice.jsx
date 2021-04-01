@@ -1,25 +1,27 @@
 import axios from 'axios';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const BASE_URL = 'https://api.punkapi.com/v2/';
 
-const apiService = () => {
+function fetchBeers() {
   return axios
     .get(`${BASE_URL}beers?page=1&per_page=80`)
 
     .then(response => response.data);
-};
+}
 
-const apiServiceByName = query => {
+function fetchBeersByName(query) {
   return axios
     .get(`${BASE_URL}beers?beer_name=${query}`)
 
     .then(response => response.data);
-};
+}
 
-apiService.propTypes = {
-  query: PropTypes.string.isRequired,
-  currentPage: PropTypes.number.isRequired,
-};
+// apiService.propTypes = {
+//   query: PropTypes.string.isRequired,
+//   currentPage: PropTypes.number.isRequired,
+// };
 
-export { apiService, apiServiceByName };
+const apiService = { fetchBeers, fetchBeersByName };
+export default apiService;
+// export default { fetchBeers, fetchBeersByName };

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 // import ReactDOM from 'react-dom';
-import { apiService } from '../APIservice';
+import apiService from '../APIservice';
 import ReactPaginate from 'react-paginate';
 import s from './StartPage.module.css';
 // import BeerList from '../BeerList';
@@ -19,15 +19,24 @@ const Pagination = () => {
   };
 
   useEffect(() => {
+    // console.log(fetchBeers);
     setIsLoading(true);
-    apiService()
-      .then(beers => setBeers(beers))
-      .catch(error => console.log(error))
-      .finally(setIsLoading(false));
+    beers
+      ? apiService
+          .fetchBeers()
+          .then(beers => setBeers(beers))
+          .catch(error => console.log(error))
+          .finally(setIsLoading(false))
+      : apiService
+          .fetchBeersByName()
+          .then(beers => setBeers(beers))
+          .catch(error => console.log(error))
+          .finally(setIsLoading(false));
   }, [isLoading, beers]);
 
   const PER_PAGE = 10;
   const offset = currentPage * PER_PAGE;
+
   const currentPageData = beers
     .slice(offset, offset + PER_PAGE)
     .map(({ id, image_url, name, first_brewed, food_pairing }) => (

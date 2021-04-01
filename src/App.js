@@ -1,32 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import axios from 'axios';
 
-import fetchBeers from './components/APIservice';
-import LoaderSpinner from './components/Loader';
+// import apiService from './components/APIservice';
+// import LoaderSpinner from './components/Loader';
 import StartPage from './components/StartPage';
 // import Modal from './components/Modal';
 // import Navbar from './components/Navbar';
 // import BeerList from './components/BeerList';
 import SearchBar from './components/SearchBar';
+import SearchPage from '../src/test/SearchPage';
 
 export default function App() {
   const [beers, setBeers] = useState('');
-  const [gallery, setGallery] = useState([]);
+  // const [gallery, setGallery] = useState([]);
+  // console.log(apiService);
 
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (!beers) {
-      return;
-    }
-    setIsLoading('true');
-    fetchBeers(beers)
-      .then(beers => {
-        setGallery([beers]);
-      })
-      .catch(error => console.log(error))
-      .finally(() => setIsLoading(false));
-  }, [beers]);
+  // useEffect(() => {
+  //   setIsLoading('true');
+  //   apiService
+  //     .fetchBeers(beers)
+  //     .catch(error => console.log(error))
+  //     .finally(() => setIsLoading(false));
+  // }, [beers]);
+
+  // useEffect(() => {
+  //   setIsLoading('true');
+  //   apiService
+  //     .fetchBeersByName(beers)
+  //     .catch(error => console.log(error))
+  //     .finally(() => setIsLoading(false));
+  // }, [beers]);
 
   // const fetchData = async () => {
   //   return await fetch(`https://api.punkapi.com/v2/beers/beer_name=${beers}`)
@@ -63,7 +68,7 @@ export default function App() {
 
   const handleFormSubmit = query => {
     if (query !== beers) {
-      setGallery([]);
+      // setGallery([]);
       setBeers(query);
     }
   };
@@ -73,9 +78,11 @@ export default function App() {
       {/* {<Navbar />} */}
 
       <SearchBar onSubmit={handleFormSubmit} />
-      {<StartPage />}
-      <div>{isLoading && <LoaderSpinner />}</div>
-      {beers && <StartPage gallery={gallery} />}
+      {!beers && <StartPage />}
+      {beers && <StartPage beers={beers} />}
+      <SearchPage />
+      {/* <div>{isLoading && <LoaderSpinner />}</div> */}
+      {/* {beers && <StartPage beers={beers} />} */}
       {/* {isModalOpen && <Modal onClose={toggleModal}></Modal>} */}
     </div>
   );
