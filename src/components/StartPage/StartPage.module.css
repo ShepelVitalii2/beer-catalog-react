@@ -38,7 +38,7 @@
 .card {
   display: grid;
   width: 200px;
-  height: 400px;
+  height: 440px;
   align-items: center;
   position: relative;
   border-radius: 10px;
@@ -142,4 +142,11 @@
 .paginationLinkDisabled a {
   color: rgb(198, 197, 202);
   border: 1px solid rgb(198, 197, 202);
+}
+
+/*ADD BUTTON*/
+
+.button {
+  width: 140px;
+  font-size: 12px;
 }

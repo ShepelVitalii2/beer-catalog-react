@@ -27,6 +27,7 @@ export default function ModalWindow() {
 
   function closeModal() {
     setIsOpen(false);
+    console.log('123');
   }
 
   return (
@@ -42,7 +43,7 @@ export default function ModalWindow() {
         onRequestClose={closeModal}
         style={customStyles}
       >
-        {<Form />}
+        {<Form onRequestClose={closeModal} />}
       </Modal>
     </div>
   );

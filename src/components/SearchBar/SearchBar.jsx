@@ -1,78 +1,70 @@
-import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+// import { useState } from 'react';
 import s from './SearchBar.module.css';
 import Modal from '../Modal';
 import CustomSearch from '../CustomSearch';
+// import Basket from '../Basket';
 // import fetchBeers from '../APIservice';
 
-export default function SearchBar({ onSubmit }) {
-  const [input, setInput] = useState('');
+export default function SearchBar({
+  searchQuery,
+  setSearchQuery,
+  filteredByAttenL,
+  filteredByAttenM,
+  filteredByABV,
+  // addBeerToBasket,
+  idBeerInStorage,
+}) {
+  // console.log(idBeerInStorage);
+  const history = useHistory();
 
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [isBeers, setIsBeers] = useState([]);
-
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   fetchBeers()
-  //     .then(isBeers => setIsBeers(isBeers))
-  //     .catch(error => console.log(error))
-  //     .finally(setIsLoading(false));
-  // }, [isLoading, isBeers]);
-
-  const queryNameChange = e => {
-    setInput(e.currentTarget.value.toLowerCase());
-    console.log(input);
+  const onSubmit = e => {
+    history.push(`?s=${searchQuery}`);
   };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (input.trim() === '') {
-      return alert('Введите название картинки');
-    }
-    onSubmit(input);
-    setInput('');
-  };
-
-  // const onRegistratinClick = e => {
-  //   e.preventDefault();
-
-  //   setIsModalOpen(true);
-  // };
-
-  // const toggleModal = () => {
-  //   setIsModalOpen(!isModalOpen);
-  //   console.log(isModalOpen);
-  // };
-
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-  //   if (input.trim() === '') {
-  //     alert('Dude, type something');
-  //   }
-
-  //   // onSubmit(query);
-  //   // setQuery('');
-  //   console.log(input);
-  // };
 
   return (
-    <header className={s.wrap} onSubmit={handleSubmit}>
-      <form className={s.searchForm}>
+    <header
+      className={s.wrap}
+      // onSubmit={handleSubmit}
+    >
+      <form
+        action="/"
+        method="get"
+        className={s.searchForm}
+        onSubmit={onSubmit}
+      >
         <button type="submit" className={s.button}>
           <span className={s.label}>Search</span>
         </button>
 
+        <label htmlFor="header-search">
+          <span className={s.visuallyHidden}>TEST</span>
+        </label>
+
         <input
+          name="s"
+          id="header-search"
           className={s.input}
           type="text"
           autoComplete="off"
-          value={input}
+          value={searchQuery}
+          onInput={e => setSearchQuery(e.target.value)}
           autoFocus
-          onChange={queryNameChange}
+          // onChange={queryNameChange}
           placeholder="TEST"
         />
       </form>
-      {<CustomSearch />}
+      {
+        <CustomSearch
+          filteredByAttenL={filteredByAttenL}
+          filteredByAttenM={filteredByAttenM}
+          filteredByABV={filteredByABV}
+        />
+      }
       {<Modal />}
+      <Link to="/beer-catalog-react/basket">Basket</Link>
+      {<Link to="/beer-catalog-react">Main</Link>}
     </header>
   );
 }

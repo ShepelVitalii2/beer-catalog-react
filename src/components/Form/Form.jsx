@@ -7,14 +7,12 @@ import DatePicker from 'react-datepicker';
 import s from './Form.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function Form() {
-  const { register, handleSubmit, watch, errors } = useForm();
+export default function Form(props) {
+  const { register, handleSubmit, errors } = useForm();
   const [startDate, setStartDate] = useState(new Date());
   const onSubmit = data => {
     console.log(data);
-  }; // your form submit function which will invoke after successful validation
-
-  console.log(watch('Piu-piu')); // you can watch individual input by pass the name of the input
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
@@ -69,7 +67,12 @@ export default function Form() {
         />
       </div>
 
-      <button type="submit" ref={register} className={s.button}>
+      <button
+        type="submit"
+        ref={register}
+        className={s.button}
+        onClick={() => props.onRequestClose()}
+      >
         Submit
       </button>
     </form>

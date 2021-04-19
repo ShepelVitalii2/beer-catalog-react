@@ -18,7 +18,12 @@ const customStyles = {
 
 Modal.setAppElement('#modal');
 
-export default function CustomSearch() {
+export default function CustomSearch({
+  filteredByAttenL,
+  filteredByAttenM,
+  filteredByABV,
+}) {
+  // console.log(props);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
@@ -41,7 +46,14 @@ export default function CustomSearch() {
         onRequestClose={closeModal}
         style={customStyles}
       >
-        {<CustomForm />}
+        {
+          <CustomForm
+            onRequestClose={closeModal}
+            filteredByAttenL={filteredByAttenL}
+            filteredByAttenM={filteredByAttenM}
+            filteredByABV={filteredByABV}
+          />
+        }
       </Modal>
     </div>
   );
