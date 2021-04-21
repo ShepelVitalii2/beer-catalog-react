@@ -5,3 +5,5 @@ export const FILTERED_BY_ABV = 'startPage/filteredByABV';
 export const FETCH_BEERS = 'startPage/fetchBeers';
 export const FETCH_BEERS_SUCCESS = 'startPage/fetchBeersSuccess';
 export const FETCH_BEERS_ERROR = 'startPage/fetchBeersError';
+
+export const BEER_IN_STORAGE = 'startPage/beerInStorage';

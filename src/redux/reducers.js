@@ -7,34 +7,98 @@ import {
   filteredByAttenM,
   filteredByAttenL,
   filteredByABV,
+  beerInStorage,
 } from './actions';
-// import fetchBeers from '../components/APIservice';
 
-const filteredBy = createReducer([], {
-  [filteredByAttenL]: (state, { payload }) => {
-    return console.log(state, payload);
-  },
-  [filteredByAttenM]: (state, { payload }) => {
-    return console.log(state, payload);
-  },
-  [filteredByABV]: (state, { payload }) => {
-    return console.log(state, payload);
-  },
+const initialState = {
+  allBeers: [],
+  filteredBeers: [],
+};
+
+const beers = createReducer(initialState, builder => {
+  builder
+    .addCase(fetchBeersRequest, (state, action) => {
+      return { ...state };
+    })
+    .addCase(fetchBeersSuccess, (state, action) => {
+      return {
+        ...state,
+        allBeers: action.payload,
+      };
+    })
+    .addCase(filteredByAttenL, (state, action) => {
+      return {
+        ...state,
+        filteredBeers: state.allBeers.filter(
+          beer => beer.attenuation_level > 75,
+        ),
+      };
+    })
+    .addCase(filteredByAttenM, (state, action) => {
+      return {
+        ...state,
+        filteredBeers: state.allBeers.filter(
+          beer => beer.attenuation_level < 75,
+        ),
+      };
+    })
+    .addCase(filteredByABV, (state, action) => {
+      return {
+        ...state,
+        filteredBeers: state.allBeers.filter(beer => beer.abv > 5),
+      };
+    });
+
+  // builder.addCase(filteredByAttenL, (state, action) => {
+  //   console.log(state);
+  //   return state.filter(beer => beer.attenuation_level > 75);
+  // });
+  // builder.addCase(filteredByAttenM, (state, action) => {
+  //   return state.filter(beer => beer.attenuation_level < 75);
+  // });
 });
 
-const beers = createReducer([], {
-  [fetchBeersRequest]: () => null,
-  [fetchBeersSuccess]: (_, { payload }) => payload,
-});
+// const filteredBy = createReducer(initialState.allBeers, builder => {
+//   builder
+//     .addCase(fetchBeersRequest, (state, action) => {
+//       return [...state];
+//     })
+//     .addCase(fetchBeersSuccess, (state, action) => {
+//       return [state, ...action.payload];
+//     });
+// });
+// {
+//   [fetchBeersRequest]: () => null,
+//   [fetchBeersSuccess]: (_, { payload }) => payload,
+
+//   [filteredByAttenL]: (state, payload) => {
+//     console.log(state);
+
+//     return state.filter(beer => beer.attenuation_level > 75);
+//   },
+//   [filteredByAttenM]: (state, _) => {
+//     return state.filter(beer => beer.attenuation_level < 75);
+//   },
+//   [filteredByABV]: (state, _) => {
+//     return state.filter(beer => beer.abv > 5);
+//   },
+// });
+
+// const beersInBasket = createReducer([], {
+//   [beerInStorage]: (state, payload) => {
+//     return [...state, ...payload.filter(beer => beer.id === +e.target.id)];
+//   },
+// });
 
 const error = createReducer(null, {
   [fetchBeersError]: (_, { payload }) => payload,
 });
 
 export default combineReducers({
-  filteredBy,
+  // filteredBy,
   beers,
   error,
+  // beersInBasket,
 });
 
 //   if (e.target.checked) {

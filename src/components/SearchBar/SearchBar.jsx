@@ -1,22 +1,10 @@
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-// import { useState } from 'react';
 import s from './SearchBar.module.css';
 import Modal from '../Modal';
 import CustomSearch from '../CustomSearch';
-// import Basket from '../Basket';
-// import fetchBeers from '../APIservice';
 
-export default function SearchBar({
-  searchQuery,
-  setSearchQuery,
-  filteredByAttenL,
-  filteredByAttenM,
-  filteredByABV,
-  // addBeerToBasket,
-  idBeerInStorage,
-}) {
-  // console.log(idBeerInStorage);
+export default function SearchBar({ searchQuery, setSearchQuery }) {
   const history = useHistory();
 
   const onSubmit = e => {
@@ -51,17 +39,10 @@ export default function SearchBar({
           value={searchQuery}
           onInput={e => setSearchQuery(e.target.value)}
           autoFocus
-          // onChange={queryNameChange}
-          placeholder="TEST"
+          placeholder="Find your beer"
         />
       </form>
-      {
-        <CustomSearch
-          filteredByAttenL={filteredByAttenL}
-          filteredByAttenM={filteredByAttenM}
-          filteredByABV={filteredByABV}
-        />
-      }
+      {<CustomSearch />}
       {<Modal />}
       <Link to="/beer-catalog-react/basket">Basket</Link>
       {<Link to="/beer-catalog-react">Main</Link>}

@@ -1,13 +1,26 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import s from '../Form/Form.module.css';
-import * as actions from '../../redux/actions';
-import { useDispatch } from 'react-redux';
+import {
+  filteredByAttenL,
+  filteredByAttenM,
+  filteredByABV,
+} from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Form({ onRequestClose }) {
-  // const chosenBeer = useSelector(state => state.value);
-  // console.log(chosenBeer);
   const dispatch = useDispatch();
+  // const filteredBy = useSelector(state => state.startPage.filteredBy);
+  // const beers = useSelector(state => state.startPage.beers);
+
+  // const allBeers = store.getState().startPage.beers;
+
+  // const filteredByAttenL = e => {
+  //   if (e.target.checked) {
+  //     return beers.filter(beer => beer.attenuation_level > 75);
+  //   }
+  // };
+  // console.log(allBeers);
 
   const { register, getValues } = useForm({
     mode: 'onChange',
@@ -26,7 +39,7 @@ export default function Form({ onRequestClose }) {
             ref={register({
               validate: atLeastOne,
             })}
-            onClick={() => dispatch(actions.filteredByAttenL())}
+            onClick={e => dispatch(filteredByAttenL())}
           />
           Период затухания больше 75
         </label>
@@ -38,7 +51,7 @@ export default function Form({ onRequestClose }) {
             ref={register({
               validate: atLeastOne,
             })}
-            onClick={() => dispatch(actions.filteredByAttenM())}
+            onClick={e => dispatch(filteredByAttenM())}
           />
           Период затухания меньше 75
         </label>
@@ -50,7 +63,7 @@ export default function Form({ onRequestClose }) {
             ref={register({
               validate: atLeastOne,
             })}
-            onClick={() => dispatch(actions.filteredByABV())}
+            onClick={e => dispatch(filteredByABV())}
           />
           Крепкое пиво
         </label>
