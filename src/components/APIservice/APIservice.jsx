@@ -1,14 +1,6 @@
 import axios from 'axios';
-// import PropTypes from 'prop-types';
 
 const BASE_URL = 'https://api.punkapi.com/v2/';
-
-// export default function fetchAllBeers() {
-//   return axios
-//     .get(`${BASE_URL}beers?page=1&per_page=80`)
-
-//     .then(response => response.data);
-// }
 
 export default function fetchBeers() {
   const pageOne = axios.get(`${BASE_URL}beers?page=1&per_page=80`);
@@ -33,14 +25,3 @@ export default function fetchBeers() {
     },
   );
 }
-
-// console.log(fetchBeers);
-
-// apiService.propTypes = {
-//   query: PropTypes.string.isRequired,
-//   currentPage: PropTypes.number.isRequired,
-// };
-
-// const apiService = { fetchBeers };
-// export default apiService;
-// export default { fetchBeers, fetchBeersByName };

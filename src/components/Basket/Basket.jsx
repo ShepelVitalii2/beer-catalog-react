@@ -1,56 +1,60 @@
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import s from '../StartPage/StartPage.module.css';
-// import s from '../SearchBar/SearchBar.module.css';
-// import SearchBar from '../SearchBar';
-// import StartPage from '../StartPage';
+import { removeBeerFromStorage } from '../../redux/actions';
+var uniqid = require('uniqid');
 
-export default function Basket({
-  image_url,
-  name,
-  //   searchQuery,
-  //   setSearchQuery,
-  //   filteredByAttenL,
-  //   filteredByAttenM,
-  //   filteredByABV,
-  addBeerToBasket,
-  idBeerInStorage,
-}) {
-  console.log(idBeerInStorage);
+export default function Basket() {
+  const beerInBasket = useSelector(state => state.startPage.beers.beerInBasket);
+  const dispatch = useDispatch();
 
   return (
     <>
       <div>
         <Link to="/beer-catalog-react" exact="true">
-          Главная
+          <button>Главная</button>
         </Link>
         <div className={s.two}>
-          <h1>The chosen beers</h1>
+          <h1>Beer added to your basket</h1>
         </div>
-
-        {/* <div className={s.cardList}>
-        <img className={s.image} src={image_url} alt={name}></img>
-        <span className={s.name}>{name}</span>
-      </div> */}
       </div>
+      <div className={s.cardList}>
+        {beerInBasket.map(
+          ({ id, image_url, name, tagline, first_brewed, food_pairing }) => {
+            return (
+              <li key={id} className={s.card}>
+                {
+                  <div>
+                    <img className={s.image} src={image_url} alt={name}></img>
+                    <span className={s.name}>{name}</span>
 
-      <ul className={s.navigation}>
-        {/* {idBeerInStorage.map(({ id, image_url, name }) => {
-          return (
-            <li key={id} className={s.card}>
-              {
-                <div>
-                  <img className={s.image} src={image_url} alt={name}></img>
-                  <span className={s.name}>{name}</span>
-
-                  <div className={s.wrap}>
-                    <div className={s.panel}></div>
+                    <div className={s.wrap}>
+                      <div className={s.panel}></div>
+                    </div>
+                    {
+                      <button
+                        id={id}
+                        className={s.button}
+                        onClick={e =>
+                          dispatch(removeBeerFromStorage(e.target.id))
+                        }
+                      >
+                        Delete beer from basket
+                      </button>
+                    }
                   </div>
+                }
+                <div className={s.cardInfo}>
+                  <blockquote className={s.blockquote}>{tagline}</blockquote>
+                  <p className={s.firstBrewed}>First brewed: {first_brewed}</p>
+
+                  <p className={s.foodPairing}>Best with: {food_pairing}</p>
                 </div>
-              }
-            </li>
-          );
-        })} */}
-      </ul>
+              </li>
+            );
+          },
+        )}
+      </div>
     </>
   );
 }

@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
+import { enableMapSet } from 'immer';
+
 import {
   fetchBeersRequest,
   fetchBeersSuccess,
@@ -7,26 +9,31 @@ import {
   filteredByAttenM,
   filteredByAttenL,
   filteredByABV,
-  beerInStorage,
+  addBeerInStorage,
+  removeBeerFromStorage,
 } from './actions';
+
+enableMapSet();
 
 const initialState = {
   allBeers: [],
   filteredBeers: [],
+  beerInBasket: [],
 };
 
 const beers = createReducer(initialState, builder => {
   builder
-    .addCase(fetchBeersRequest, (state, action) => {
+    .addCase(fetchBeersRequest, (state, _) => {
       return { ...state };
     })
-    .addCase(fetchBeersSuccess, (state, action) => {
+    .addCase(fetchBeersSuccess, (_, action) => {
       return {
-        ...state,
         allBeers: action.payload,
+        filteredBeers: action.payload,
+        beerInBasket: [],
       };
     })
-    .addCase(filteredByAttenL, (state, action) => {
+    .addCase(filteredByAttenL, (state, _) => {
       return {
         ...state,
         filteredBeers: state.allBeers.filter(
@@ -34,7 +41,7 @@ const beers = createReducer(initialState, builder => {
         ),
       };
     })
-    .addCase(filteredByAttenM, (state, action) => {
+    .addCase(filteredByAttenM, (state, _) => {
       return {
         ...state,
         filteredBeers: state.allBeers.filter(
@@ -42,66 +49,35 @@ const beers = createReducer(initialState, builder => {
         ),
       };
     })
-    .addCase(filteredByABV, (state, action) => {
+    .addCase(filteredByABV, (state, _) => {
       return {
         ...state,
         filteredBeers: state.allBeers.filter(beer => beer.abv > 5),
       };
+    })
+    .addCase(addBeerInStorage, (state, action) => {
+      return {
+        ...state,
+        beerInBasket: state.allBeers
+          .filter(beer => beer.id === +action.payload)
+          .concat(state.beerInBasket),
+      };
+    })
+    .addCase(removeBeerFromStorage, (state, action) => {
+      return {
+        ...state,
+        beerInBasket: state.beerInBasket.filter(
+          beer => beer.id !== +action.payload,
+        ),
+      };
     });
-
-  // builder.addCase(filteredByAttenL, (state, action) => {
-  //   console.log(state);
-  //   return state.filter(beer => beer.attenuation_level > 75);
-  // });
-  // builder.addCase(filteredByAttenM, (state, action) => {
-  //   return state.filter(beer => beer.attenuation_level < 75);
-  // });
 });
-
-// const filteredBy = createReducer(initialState.allBeers, builder => {
-//   builder
-//     .addCase(fetchBeersRequest, (state, action) => {
-//       return [...state];
-//     })
-//     .addCase(fetchBeersSuccess, (state, action) => {
-//       return [state, ...action.payload];
-//     });
-// });
-// {
-//   [fetchBeersRequest]: () => null,
-//   [fetchBeersSuccess]: (_, { payload }) => payload,
-
-//   [filteredByAttenL]: (state, payload) => {
-//     console.log(state);
-
-//     return state.filter(beer => beer.attenuation_level > 75);
-//   },
-//   [filteredByAttenM]: (state, _) => {
-//     return state.filter(beer => beer.attenuation_level < 75);
-//   },
-//   [filteredByABV]: (state, _) => {
-//     return state.filter(beer => beer.abv > 5);
-//   },
-// });
-
-// const beersInBasket = createReducer([], {
-//   [beerInStorage]: (state, payload) => {
-//     return [...state, ...payload.filter(beer => beer.id === +e.target.id)];
-//   },
-// });
 
 const error = createReducer(null, {
   [fetchBeersError]: (_, { payload }) => payload,
 });
 
 export default combineReducers({
-  // filteredBy,
   beers,
   error,
-  // beersInBasket,
 });
-
-//   if (e.target.checked) {
-//     console.log(e);
-//     return state.filter(beer => beer.attenuation_level < 75);
-//   }

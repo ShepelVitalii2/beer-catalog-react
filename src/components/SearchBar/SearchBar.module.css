@@ -42,6 +42,26 @@
   opacity: 1;
 }
 
+.btn {
+  color: #454545;
+  max-width: 200px;
+  display: inline-block;
+  width: 200px;
+  color: #454545;
+  background: transparent;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #454545;
+  position: relative;
+  margin: 1em;
+  display: inline-block;
+  padding: 0.5em 1em;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  font-family: comfortaa;
+  font-weight: bold;
+}
+
 .label {
   position: absolute;
   width: 1px;

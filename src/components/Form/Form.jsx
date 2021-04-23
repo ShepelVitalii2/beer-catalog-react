@@ -6,16 +6,20 @@ import DatePicker from 'react-datepicker';
 
 import s from './Form.module.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import img from '../../img/cancel-circle.png';
 
 export default function Form(props) {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, errors } = useForm();
   const [startDate, setStartDate] = useState(new Date());
-  const onSubmit = data => {
-    console.log(data);
-  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+    <form className={s.form}>
+      <img
+        src={img}
+        alt={'img'}
+        className={s.image}
+        onClick={props.onRequestClose}
+      />
       <h2 className={s.h2}>Sign up</h2>
       <label htmlFor="text" className={s.label}>
         Personal information

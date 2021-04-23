@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import Form from '../Form';
 import s from './Modal.module.css';
+import img from '../../img/cancel-circle.png';
 
 const customStyles = {
   content: {
@@ -42,6 +43,7 @@ export default function ModalWindow() {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
+        img={img}
       >
         {<Form onRequestClose={closeModal} />}
       </Modal>

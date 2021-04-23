@@ -4,25 +4,16 @@ import ReactPaginate from 'react-paginate';
 import s from './StartPage.module.css';
 import SearchBar from '../SearchBar';
 import { fetchBeersRedux } from '../../redux/operations';
-import store from '../../redux/store';
+import { addBeerInStorage } from '../../redux/actions';
+var uniqid = require('uniqid');
 
-const Pagination = () => {
+const StartPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
-  const beers = useSelector(state => state.startPage.beers.allBeers);
-  const filteredBy = useSelector(state => state.startPage.beers.filteredBeers);
-  console.log(filteredBy);
 
-  // console.log(store.getState().startPage.beers.allBeers);
-  // let beers = store.getState().startPage.beers;
-  // const beers = store.getState().startPage.beers;
-  // console.log(beers);
-  const [isLoading, setIsLoading] = useState(false);
-  const [idBeerInStorage, setIdBeerInStorage] = useState([]);
+  const beers = useSelector(state => state.startPage.beers.filteredBeers);
+  const [addedBeer] = useState(false);
+
   const dispatch = useDispatch();
-  // beers = store.getState().startPage.beers;
-
-  // console.log(store.getState().startPage.beers);
-  // dispatch(fetchBeersRedux());
 
   const { search } = window.location;
   const query = new URLSearchParams(search).get('s');
@@ -32,7 +23,6 @@ const Pagination = () => {
     if (!query) {
       return beers;
     }
-    // console.log(beers);
     return beers.filter(beers => {
       const beerName = beers.name.toLowerCase();
       return beerName.includes(query);
@@ -41,78 +31,59 @@ const Pagination = () => {
 
   const filteredBeers = filterBeers(beers, query);
 
-  const addBeerClick = (e, id) => {
-    e.preventDefault();
-
-    setIdBeerInStorage([
-      ...idBeerInStorage,
-      ...beers.filter(beer => beer.id === +e.target.id),
-    ]);
-  };
-
-  const removeBeerClick = (e, id) => {
-    e.preventDefault();
-
-    setIdBeerInStorage(
-      idBeerInStorage.filter(beer => beer.id === +e.target.id),
-    );
-
-    // console.log(idBeerInStorage);
-  };
-
-  const addBeerToBasket = () => {
-    setIdBeerInStorage(beers);
+  const addedBeerState = (e, id) => {
+    if (!addedBeer) {
+      e.target.textContent = 'Added';
+      document.getElementById(`${id}`).disabled = true;
+    }
   };
 
   useEffect(() => {
-    setIsLoading(true);
     dispatch(fetchBeersRedux());
-  }, [isLoading, dispatch]);
+  }, [dispatch]);
 
-  const PER_PAGE = 20;
+  const PER_PAGE = 15;
   const offset = currentPage * PER_PAGE;
 
   const currentPageData = (
     <>
       {filteredBeers
         .slice(offset, offset + PER_PAGE)
-        .map(({ id, image_url, name }) => {
+        .map(({ id, image_url, name, tagline, first_brewed, food_pairing }) => {
           return (
-            <li key={id} className={s.card}>
-              {
-                <div>
-                  <img className={s.image} src={image_url} alt={name}></img>
-                  <span className={s.name}>{name}</span>
+            <li key={uniqid()} className={s.card}>
+              <div>
+                <img className={s.image} src={image_url} alt={name}></img>
+                <span className={s.name}>{name}</span>
 
-                  <div className={s.wrap}>
-                    <div className={s.panel}>
-                      {
-                        <button
-                          id={id}
-                          className={s.button}
-                          onClick={e => addBeerClick(e)}
-                        >
-                          Add beer to basket
-                        </button>
-                      }
-                      {
-                        <button
-                          id={id}
-                          className={s.button}
-                          onClick={e => removeBeerClick(e)}
-                        >
-                          Delete beer from basket
-                        </button>
-                      }
-                    </div>
+                <div className={s.wrap}>
+                  <div className={s.panel}>
+                    <button
+                      id={id}
+                      className={s.button}
+                      onClick={e => {
+                        dispatch(addBeerInStorage(e.target.id));
+                        addedBeerState(e, id);
+                      }}
+                    >
+                      Add beer to basket
+                    </button>
                   </div>
                 </div>
-              }
+              </div>
+
+              <div className={s.cardInfo}>
+                <blockquote className={s.blockquote}>{tagline}</blockquote>
+                <p className={s.firstBrewed}>First brewed: {first_brewed}</p>
+
+                <p className={s.foodPairing}>Best with: {food_pairing}</p>
+              </div>
             </li>
           );
         })}
     </>
   );
+
   const pageCount = Math.ceil(beers.length / PER_PAGE);
 
   function handlePageClick({ selected: selectedPage }) {
@@ -121,14 +92,7 @@ const Pagination = () => {
 
   return (
     <>
-      {
-        <SearchBar
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          addBeerToBasket={addBeerToBasket}
-          idBeerInStorage={idBeerInStorage}
-        />
-      }
+      {<SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />}
 
       <div className={s.two}>
         <h1>List of Beers from all over the world</h1>
@@ -153,4 +117,4 @@ const Pagination = () => {
   );
 };
 
-export default Pagination;
+export default StartPage;

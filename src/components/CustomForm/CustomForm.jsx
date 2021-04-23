@@ -1,26 +1,16 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import s from '../Form/Form.module.css';
+import img from '../../img/cancel-circle.png';
 import {
   filteredByAttenL,
   filteredByAttenM,
   filteredByABV,
 } from '../../redux/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 export default function Form({ onRequestClose }) {
   const dispatch = useDispatch();
-  // const filteredBy = useSelector(state => state.startPage.filteredBy);
-  // const beers = useSelector(state => state.startPage.beers);
-
-  // const allBeers = store.getState().startPage.beers;
-
-  // const filteredByAttenL = e => {
-  //   if (e.target.checked) {
-  //     return beers.filter(beer => beer.attenuation_level > 75);
-  //   }
-  // };
-  // console.log(allBeers);
 
   const { register, getValues } = useForm({
     mode: 'onChange',
@@ -31,6 +21,12 @@ export default function Form({ onRequestClose }) {
   return (
     <>
       <form>
+        <img
+          src={img}
+          alt={'img'}
+          className={s.image}
+          onClick={onRequestClose}
+        />
         <label htmlFor="name">
           <input
             className={s.button}
@@ -39,7 +35,7 @@ export default function Form({ onRequestClose }) {
             ref={register({
               validate: atLeastOne,
             })}
-            onClick={e => dispatch(filteredByAttenL())}
+            onClick={() => dispatch(filteredByAttenL())}
           />
           Период затухания больше 75
         </label>
@@ -51,7 +47,7 @@ export default function Form({ onRequestClose }) {
             ref={register({
               validate: atLeastOne,
             })}
-            onClick={e => dispatch(filteredByAttenM())}
+            onClick={() => dispatch(filteredByAttenM())}
           />
           Период затухания меньше 75
         </label>
@@ -63,7 +59,7 @@ export default function Form({ onRequestClose }) {
             ref={register({
               validate: atLeastOne,
             })}
-            onClick={e => dispatch(filteredByABV())}
+            onClick={() => dispatch(filteredByABV())}
           />
           Крепкое пиво
         </label>
@@ -81,9 +77,3 @@ export default function Form({ onRequestClose }) {
     </>
   );
 }
-
-// const mapStateToProps = state => {
-//   return;
-// };
-
-// export default connect(mapStateToProps)(Form);

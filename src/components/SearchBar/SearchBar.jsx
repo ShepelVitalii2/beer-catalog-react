@@ -12,12 +12,9 @@ export default function SearchBar({ searchQuery, setSearchQuery }) {
   };
 
   return (
-    <header
-      className={s.wrap}
-      // onSubmit={handleSubmit}
-    >
+    <header className={s.wrap}>
       <form
-        action="/"
+        action="/beer-catalog-react"
         method="get"
         className={s.searchForm}
         onSubmit={onSubmit}
@@ -44,8 +41,10 @@ export default function SearchBar({ searchQuery, setSearchQuery }) {
       </form>
       {<CustomSearch />}
       {<Modal />}
-      <Link to="/beer-catalog-react/basket">Basket</Link>
-      {<Link to="/beer-catalog-react">Main</Link>}
+
+      <Link to="/beer-catalog-react/basket">
+        <button>Basket</button>
+      </Link>
     </header>
   );
 }

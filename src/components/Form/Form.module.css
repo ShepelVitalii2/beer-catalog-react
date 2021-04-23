@@ -44,6 +44,32 @@
   font-weight: 200;
 }
 
+.image {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* -webkit-transform: translate(-8px, 8px);
+  transform: translate(-8px, 8px); */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50%;
+  cursor: pointer;
+  /* fill: rgb(223, 157, 157); */
+  /* background-color: #fff; */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .button[type='submit'],
 .input[type='submit'] {
   background: #ec5990;
@@ -103,7 +129,6 @@ hr {
 }
 
 button {
-  width: 100%;
   display: block;
   appearance: none;
   margin-top: 40px;
