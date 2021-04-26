@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/beer-catalog-react/static/css/main.19825a8d.chunk.css",
-    "main.js": "/beer-catalog-react/static/js/main.5fedacd3.chunk.js",
-    "main.js.map": "/beer-catalog-react/static/js/main.5fedacd3.chunk.js.map",
+    "main.js": "/beer-catalog-react/static/js/main.6d2ad9f2.chunk.js",
+    "main.js.map": "/beer-catalog-react/static/js/main.6d2ad9f2.chunk.js.map",
     "runtime-main.js": "/beer-catalog-react/static/js/runtime-main.1f1f9914.js",
     "runtime-main.js.map": "/beer-catalog-react/static/js/runtime-main.1f1f9914.js.map",
     "static/css/2.edb76bdd.chunk.css": "/beer-catalog-react/static/css/2.edb76bdd.chunk.css",
-    "static/js/2.aea4645f.chunk.js": "/beer-catalog-react/static/js/2.aea4645f.chunk.js",
-    "static/js/2.aea4645f.chunk.js.map": "/beer-catalog-react/static/js/2.aea4645f.chunk.js.map",
+    "static/js/2.1490685e.chunk.js": "/beer-catalog-react/static/js/2.1490685e.chunk.js",
+    "static/js/2.1490685e.chunk.js.map": "/beer-catalog-react/static/js/2.1490685e.chunk.js.map",
     "index.html": "/beer-catalog-react/index.html",
     "static/css/2.edb76bdd.chunk.css.map": "/beer-catalog-react/static/css/2.edb76bdd.chunk.css.map",
     "static/css/main.19825a8d.chunk.css.map": "/beer-catalog-react/static/css/main.19825a8d.chunk.css.map",
-    "static/js/2.aea4645f.chunk.js.LICENSE.txt": "/beer-catalog-react/static/js/2.aea4645f.chunk.js.LICENSE.txt"
+    "static/js/2.1490685e.chunk.js.LICENSE.txt": "/beer-catalog-react/static/js/2.1490685e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.1f1f9914.js",
     "static/css/2.edb76bdd.chunk.css",
-    "static/js/2.aea4645f.chunk.js",
+    "static/js/2.1490685e.chunk.js",
     "static/css/main.19825a8d.chunk.css",
-    "static/js/main.5fedacd3.chunk.js"
+    "static/js/main.6d2ad9f2.chunk.js"
   ]
 }
