@@ -7,7 +7,7 @@ import {
   filteredByAttenM,
   filteredByABV,
 } from '../../redux/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Form({ onRequestClose }) {
   const dispatch = useDispatch();
@@ -17,6 +17,24 @@ export default function Form({ onRequestClose }) {
   });
   const atLeastOne = () =>
     getValues('test').length ? true : 'Please tell me if this is too hard.';
+
+  const beers = useSelector(state => state.startPage.beers.allBeers);
+
+  const filteredBeerByAttenL = () => {
+    dispatch(
+      filteredByAttenL(beers.filter(beer => beer.attenuation_level > 75)),
+    );
+  };
+
+  const filteredBeerByAttenM = () => {
+    dispatch(
+      filteredByAttenM(beers.filter(beer => beer.attenuation_level < 75)),
+    );
+  };
+
+  const filteredBeerByABV = () => {
+    dispatch(filteredByABV(beers.filter(beer => beer.abv > 5)));
+  };
 
   return (
     <>
@@ -35,7 +53,7 @@ export default function Form({ onRequestClose }) {
             ref={register({
               validate: atLeastOne,
             })}
-            onClick={() => dispatch(filteredByAttenL())}
+            onClick={filteredBeerByAttenL}
           />
           Период затухания больше 75
         </label>
@@ -47,7 +65,7 @@ export default function Form({ onRequestClose }) {
             ref={register({
               validate: atLeastOne,
             })}
-            onClick={() => dispatch(filteredByAttenM())}
+            onClick={filteredBeerByAttenM}
           />
           Период затухания меньше 75
         </label>
@@ -59,7 +77,7 @@ export default function Form({ onRequestClose }) {
             ref={register({
               validate: atLeastOne,
             })}
-            onClick={() => dispatch(filteredByABV())}
+            onClick={filteredBeerByABV}
           />
           Крепкое пиво
         </label>

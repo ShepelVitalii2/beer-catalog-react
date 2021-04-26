@@ -11,6 +11,10 @@ export default function SearchBar({ searchQuery, setSearchQuery }) {
     history.push(`?s=${searchQuery}`);
   };
 
+  const onSetSearchQuery = e => {
+    setSearchQuery(e.target.value);
+  };
+
   return (
     <header className={s.wrap}>
       <form
@@ -34,7 +38,7 @@ export default function SearchBar({ searchQuery, setSearchQuery }) {
           type="text"
           autoComplete="off"
           value={searchQuery}
-          onInput={e => setSearchQuery(e.target.value)}
+          onInput={onSetSearchQuery}
           autoFocus
           placeholder="Find your beer"
         />

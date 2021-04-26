@@ -75,7 +75,7 @@ export default function Form(props) {
         type="submit"
         ref={register}
         className={s.button}
-        onClick={() => props.onRequestClose()}
+        onClick={props.onRequestClose}
       >
         Submit
       </button>

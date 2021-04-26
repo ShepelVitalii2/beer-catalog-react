@@ -11,6 +11,8 @@ const StartPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const beers = useSelector(state => state.startPage.beers.filteredBeers);
+  const beerInBasket = useSelector(state => state.startPage.beers.beerInBasket);
+
   const [addedBeer] = useState(false);
 
   const dispatch = useDispatch();
@@ -31,10 +33,17 @@ const StartPage = () => {
 
   const filteredBeers = filterBeers(beers, query);
 
-  const addedBeerState = (e, id) => {
+  const onSetBeerInStorage = e => {
+    // debugger;
     if (!addedBeer) {
+      // e.preventDefault();
       e.target.textContent = 'Added';
-      document.getElementById(`${id}`).disabled = true;
+      document.getElementById(`${e.target.id}`).disabled = true;
+      dispatch(
+        addBeerInStorage(
+          beers.filter(beer => beer.id === +e.target.id).concat(beerInBasket),
+        ),
+      );
     }
   };
 
@@ -42,13 +51,13 @@ const StartPage = () => {
     dispatch(fetchBeersRedux());
   }, [dispatch]);
 
-  const PER_PAGE = 15;
-  const offset = currentPage * PER_PAGE;
+  const amountPerPage = 15;
+  const offset = currentPage * amountPerPage;
 
   const currentPageData = (
     <>
       {filteredBeers
-        .slice(offset, offset + PER_PAGE)
+        .slice(offset, offset + amountPerPage)
         .map(({ id, image_url, name, tagline, first_brewed, food_pairing }) => {
           return (
             <li key={uniqid()} className={s.card}>
@@ -61,10 +70,7 @@ const StartPage = () => {
                     <button
                       id={id}
                       className={s.button}
-                      onClick={e => {
-                        dispatch(addBeerInStorage(e.target.id));
-                        addedBeerState(e, id);
-                      }}
+                      onClick={onSetBeerInStorage}
                     >
                       Add beer to basket
                     </button>
@@ -84,7 +90,7 @@ const StartPage = () => {
     </>
   );
 
-  const pageCount = Math.ceil(beers.length / PER_PAGE);
+  const pageCount = Math.ceil(beers.length / amountPerPage);
 
   function handlePageClick({ selected: selectedPage }) {
     setCurrentPage(selectedPage);

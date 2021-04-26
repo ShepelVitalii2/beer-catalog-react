@@ -12,6 +12,7 @@ import {
 } from './types';
 
 export const filteredByAttenL = createAction(FILTERED_BY_ATTEN_L);
+
 export const filteredByAttenM = createAction(FILTERED_BY_ATTEN_M);
 export const filteredByABV = createAction(FILTERED_BY_ABV);
 

@@ -2,11 +2,19 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import s from '../StartPage/StartPage.module.css';
 import { removeBeerFromStorage } from '../../redux/actions';
-var uniqid = require('uniqid');
+// var uniqid = require('uniqid');
 
 export default function Basket() {
   const beerInBasket = useSelector(state => state.startPage.beers.beerInBasket);
   const dispatch = useDispatch();
+
+  const removeBeer = e => {
+    dispatch(
+      removeBeerFromStorage(
+        beerInBasket.filter(beer => beer.id !== +e.target.id),
+      ),
+    );
+  };
 
   return (
     <>
@@ -32,13 +40,7 @@ export default function Basket() {
                       <div className={s.panel}></div>
                     </div>
                     {
-                      <button
-                        id={id}
-                        className={s.button}
-                        onClick={e =>
-                          dispatch(removeBeerFromStorage(e.target.id))
-                        }
-                      >
+                      <button id={id} className={s.button} onClick={removeBeer}>
                         Delete beer from basket
                       </button>
                     }

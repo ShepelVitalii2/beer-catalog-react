@@ -28,7 +28,6 @@ export default function ModalWindow() {
 
   function closeModal() {
     setIsOpen(false);
-    console.log('123');
   }
 
   return (

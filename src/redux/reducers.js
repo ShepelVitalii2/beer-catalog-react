@@ -33,42 +33,35 @@ const beers = createReducer(initialState, builder => {
         beerInBasket: [],
       };
     })
-    .addCase(filteredByAttenL, (state, _) => {
+    .addCase(filteredByAttenL, (state, action) => {
+      console.log(action);
       return {
         ...state,
-        filteredBeers: state.allBeers.filter(
-          beer => beer.attenuation_level > 75,
-        ),
+        filteredBeers: action.payload,
       };
     })
-    .addCase(filteredByAttenM, (state, _) => {
+    .addCase(filteredByAttenM, (state, action) => {
       return {
         ...state,
-        filteredBeers: state.allBeers.filter(
-          beer => beer.attenuation_level < 75,
-        ),
+        filteredBeers: action.payload,
       };
     })
-    .addCase(filteredByABV, (state, _) => {
+    .addCase(filteredByABV, (state, action) => {
       return {
         ...state,
-        filteredBeers: state.allBeers.filter(beer => beer.abv > 5),
+        filteredBeers: action.payload,
       };
     })
     .addCase(addBeerInStorage, (state, action) => {
       return {
         ...state,
-        beerInBasket: state.allBeers
-          .filter(beer => beer.id === +action.payload)
-          .concat(state.beerInBasket),
+        beerInBasket: action.payload,
       };
     })
     .addCase(removeBeerFromStorage, (state, action) => {
       return {
         ...state,
-        beerInBasket: state.beerInBasket.filter(
-          beer => beer.id !== +action.payload,
-        ),
+        beerInBasket: action.payload,
       };
     });
 });
